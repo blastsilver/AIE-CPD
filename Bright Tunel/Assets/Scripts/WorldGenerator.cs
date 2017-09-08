@@ -14,12 +14,18 @@ public class WorldGenerator : MonoBehaviour
 		// iterate through spawn amount
 		for (int i = 0; i < amount; i++)
 		{
-			// instantiate object & append to list
-			list.Add(GameObject.Instantiate(prefabBase, position, new Quaternion(), transform));
+            // spawn & append object to list
+            list.Add(Spawn(position));
 			// update position
 			position += offset;
 		}
 		// return object list
 		return list;
 	}
+
+    public GameObject Spawn(Vector3 position)
+    {
+        // instantiate new object
+        return Instantiate(prefabBase, position, new Quaternion(), transform);
+    }
 }
