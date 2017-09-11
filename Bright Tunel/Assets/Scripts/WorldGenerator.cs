@@ -6,7 +6,7 @@ public class WorldGenerator : MonoBehaviour
 {
 	public GameObject prefabBase = null;
 
-	public List<GameObject> Generate(Vector3 start, Vector3 offset, int amount)
+	public List<GameObject> Generate(Vector3 start, float offsetY, int amount)
 	{
 		// required variables
 		Vector3 position = start;
@@ -17,7 +17,7 @@ public class WorldGenerator : MonoBehaviour
             // spawn & append object to list
             list.Add(Spawn(position));
 			// update position
-			position += offset;
+			position.y += offsetY;
 		}
 		// return object list
 		return list;
