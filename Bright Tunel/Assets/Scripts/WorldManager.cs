@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 public class WorldManager : MonoBehaviour
 {
-	public bool _testSPAWN = false;
-	public bool _testCLEANUP = false;
-	public bool _testTRANSLATE = false;
+	[Range(0.0f, 10.0f)] public float speed;
 	public GenerationSettings generationSettings = new GenerationSettings();
-
 
 	private List<GameObject> m_WorldObjects = new List<GameObject>();
 
@@ -19,32 +16,32 @@ public class WorldManager : MonoBehaviour
 
 	void Update ()
 	{
-		if (_testSPAWN)
+		foreach (GameObject obj in m_WorldObjects)
 		{
-			GenerateChunk (generationSettings);
-			_testSPAWN = false;
+			obj.transform.Translate (Vector3.down * generationSettings.offset * speed * Time.deltaTime);
 		}
-		if (_testCLEANUP)
+
+		while (m_WorldObjects [m_WorldObjects.Count - 1].transform.position.y < Camera.main.transform.position.y)
 		{
-			for (int i = 0; i < m_WorldObjects.Count; i++)
-			{
-				if (m_WorldObjects[i].transform.position.y < -Camera.main.farClipPlane)
-				{
-					Destroy(m_WorldObjects[i]);
-					m_WorldObjects.RemoveAt (i--);
-				}
-			}
-			_testCLEANUP = false;
-		}
-		if (_testTRANSLATE)
-		{
-			foreach (GameObject obj in m_WorldObjects)
-			{
-				obj.transform.Translate (Vector3.down * generationSettings.offset);
-			}
-			_testTRANSLATE = false;
+			CleanupChunks();
+			GenerateChunk(generationSettings);
 		}
     }
+
+	public void CleanupChunks()
+	{
+		// iterate through world objects
+		for (int i = 0; i < m_WorldObjects.Count; i++)
+		{
+			// check if out of range
+			if (m_WorldObjects[i].transform.position.y < -Camera.main.farClipPlane)
+			{
+				// delete game object
+				Destroy(m_WorldObjects[i]);
+				m_WorldObjects.RemoveAt (i--);
+			}
+		}
+	}
 
 	public void GenerateChunk(GenerationSettings settings)
 	{
