@@ -9,7 +9,9 @@ public class JumpTo : MonoBehaviour
 
     //the start point is where the player starts the jump and is locked to when not moving
     public Transform StartPoint;
-    //the 
+    //used for lerping purposes so we dont get weird movment from the player character when jumping
+    public Vector3 StartPointPoint;
+    //the end point of where the player is going
     public Transform EndPoint;
 
     //the time spent jumping allready
@@ -43,6 +45,7 @@ public class JumpTo : MonoBehaviour
                 {
                     EndPoint = hit.transform;
                     JumpTimer = 0;
+                    StartPointPoint = StartPoint.position;
                 }
             }
         }
@@ -54,7 +57,7 @@ public class JumpTo : MonoBehaviour
             JumpTimer += Time.deltaTime;
 
             //the lerping between the two points
-            TempV = Vector3.Lerp(StartPoint.position, EndPoint.position, JumpTimer / MaxJumpTime);
+            TempV = Vector3.Lerp(StartPointPoint, EndPoint.position, JumpTimer / MaxJumpTime);
             //offset our y value with the value recived on the animation curve based on the time passed in
             TempV.y += jumpPath.Evaluate(JumpTimer);
             
@@ -70,6 +73,7 @@ public class JumpTo : MonoBehaviour
                 finishedJump = true;
                 StartPoint = EndPoint;
                 EndPoint = null;
+                StartPoint.GetComponent<RotateChunk>().RotateTheChunk();
             }
 
             //lock us to the start point if we are not moving

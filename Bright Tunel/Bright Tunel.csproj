@@ -131,6 +131,7 @@
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\JumpTo.cs" />
+    <Compile Include="Assets\Scripts\RotateChunk.cs" />
     <Compile Include="Assets\Scripts\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
