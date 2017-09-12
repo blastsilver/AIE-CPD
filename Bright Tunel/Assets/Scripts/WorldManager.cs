@@ -5,13 +5,35 @@ using System.Collections.Generic;
 public class WorldManager : MonoBehaviour
 {
 	[Range(0.0f, 10.0f)] public float speed;
-	public GenerationSettings generationSettings = new GenerationSettings();
 
-	private List<GameObject> m_WorldObjects = new List<GameObject>();
+    private List<GameObject> m_WorldObjects = new List<GameObject>();
+
+    public GameObject playerObject;
+
+    public GenerationSettings generationSettings = new GenerationSettings();
+
 
 	void Start()
 	{
 		GenerateWorld (generationSettings);
+
+        playerObject = Instantiate(generationSettings.prefabs[1], new Vector3(0, 0, 0), new Quaternion());
+
+        GameObject holder = m_WorldObjects[0];
+        List<Transform> transformHolder = new List<Transform>();
+
+        foreach (Transform lv1 in holder.transform)
+        {
+            foreach (Transform child in lv1)
+            {
+                if (child.tag == "JumpBlock")
+                {
+                    transformHolder.Add(child);
+                }
+            }
+        }
+
+        playerObject.GetComponent<JumpTo>().StartPoint = transformHolder[0];
 	}
 
 	void Update ()

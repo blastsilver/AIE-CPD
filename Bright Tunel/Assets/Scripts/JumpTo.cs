@@ -45,6 +45,8 @@ public class JumpTo : MonoBehaviour
             TempV = Vector3.Lerp(StartPoint.position, EndPoint.position, JumpTimer / MaxJumpTime);
             TempV.y += jumpPath.Evaluate(JumpTimer);
 
+            Debug.Log(JumpTimer);
+
             transform.position = TempV;
             finishedJump = false;
         }
@@ -56,6 +58,7 @@ public class JumpTo : MonoBehaviour
                 StartPoint = EndPoint;
                 EndPoint = null;
             }
+            gameObject.transform.position = StartPoint.position;
         }
     }
 

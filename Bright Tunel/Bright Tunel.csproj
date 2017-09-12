@@ -129,8 +129,8 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\JumpTo.cs" />
-    <Compile Include="Assets\Scripts\WorldGenerator.cs" />
     <Compile Include="Assets\Scripts\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
