@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -42,10 +42,10 @@ MonoBehaviour:
     y: 30
     width: 1664
     height: 902
-  m_MinSize: {x: 679, y: 492}
-  m_MaxSize: {x: 14002, y: 14042}
+  m_MinSize: {x: 683, y: 492}
+  m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 148
+  controlID: 109
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -64,8 +64,8 @@ MonoBehaviour:
     y: 0
     width: 277
     height: 902
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -89,8 +89,8 @@ MonoBehaviour:
     y: 0
     width: 211
     height: 631
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -165,7 +165,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: Default
+  m_LastLoadedLayoutName: 
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -206,10 +206,10 @@ MonoBehaviour:
     y: 0
     width: 1387
     height: 902
-  m_MinSize: {x: 404, y: 492}
+  m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 149
+  controlID: 68
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -230,10 +230,10 @@ MonoBehaviour:
     y: 0
     width: 1387
     height: 631
-  m_MinSize: {x: 404, y: 221}
-  m_MaxSize: {x: 8004, y: 4021}
+  m_MinSize: {x: 406, y: 221}
+  m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 150
+  controlID: 46
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,19 +325,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\s171669\Desktop\AIE-CPD\Bright Tunel
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 9e2b0000
-    m_LastClickedID: 11166
-    m_ExpandedIDs: 00000000fa2a00007a2c00007c2c00007e2c000000ca9a3bffffff7f
+    m_SelectedIDs: 82290000
+    m_LastClickedID: 10626
+    m_ExpandedIDs: 0000000078280000082a00000a2a00000c2a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -365,7 +365,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fa2a00007a2c00007c2c00007e2c0000
+    m_ExpandedIDs: 0000000078280000082a00000a2a00000c2a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000048290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -481,23 +481,23 @@ MonoBehaviour:
     height: 610
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ac2e0000
-    m_LastClickedID: 11948
-    m_ExpandedIDs: a829faff7c2afaff849bfaff46d7fbff8ad7fbffeed7fbfff2d7fbfff6d7fbffb2d8fbfff6d8fbff5ad9fbff5ed9fbff62d9fbff1edafbff62dafbffc6dafbffcadafbffcedafbff8adbfbffcedbfbff32dcfbff36dcfbff3adcfbfff6dcfbff3addfbff9eddfbffa2ddfbffa6ddfbffb8cafdffa4cbfdffa8cbfdffd441feff689ffeff46a0feff4aa0feff7c41ffff5a42ffff5e42ffff7a44ffff1c4effff6c5bffff9464ffffbec9ffff1eccffff0acdffff0ecdffffead1ffffbad2ffff42f4ffff000000002c2c00004c2c00008e2e0000ac2e0000
+    m_SelectedIDs: 06070000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 26f6ffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: world
-      m_OriginalName: world
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 11340
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.0030715074, y: 0.76951635, z: -0.003701128, w: -0.63860893}
     speed: 2
-    m_Value: {x: -0.0030715077, y: 0.7695164, z: -0.0037011283, w: -0.638609}
+    m_Value: {x: -0.0030715077, y: 0.76951635, z: -0.0037011283, w: -0.63860893}
   m_Size:
     m_Target: 15.60811
     speed: 2

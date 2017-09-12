@@ -17,13 +17,19 @@ public class WorldManager : MonoBehaviour
 	{
 		GenerateWorld (generationSettings);
 
+        //instantiate the player
         playerObject = Instantiate(generationSettings.prefabs[1], new Vector3(0, 0, 0), new Quaternion());
 
+        //get the first object on the list wich is the bottom most one
         GameObject holder = m_WorldObjects[0];
+        //create a list holding all the stating off jump points
         List<Transform> transformHolder = new List<Transform>();
 
+        //get all the child objects in the chunk we are looking for
         foreach (Transform lv1 in holder.transform)
         {
+            //get the child objects of those ones and fin the children there with the tag "JumpBlock" and add that
+            //to our list
             foreach (Transform child in lv1)
             {
                 if (child.tag == "JumpBlock")
@@ -33,6 +39,8 @@ public class WorldManager : MonoBehaviour
             }
         }
 
+        //assign the players start point to the first object in the list of available points
+        //dose not matter wich one we start off with
         playerObject.GetComponent<JumpTo>().StartPoint = transformHolder[0];
 	}
 
