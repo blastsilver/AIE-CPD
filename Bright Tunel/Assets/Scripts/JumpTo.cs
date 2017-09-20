@@ -77,7 +77,7 @@ public class JumpTo : MonoBehaviour
             }
 
             //lock us to the start point if we are not moving
-            gameObject.transform.position = StartPoint.position;
+			if (StartPoint && StartPoint.transform) gameObject.transform.position = StartPoint.position;
         }
     }
 

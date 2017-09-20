@@ -9,6 +9,7 @@ public enum UIActionEvent
 	GAME_EXIT,
 	GAME_START,
 	GAME_PAUSE,
+	GAME_FINISH,
 	GAME_RESTART,
 	GAME_CONTINUE,
 }

@@ -13,7 +13,6 @@ public class UIAction : MonoBehaviour
 		if (listener.gameObject != gameObject)
 		{
 			m_listener = listener;
-			Debug.Log (m_listener);
 		}
 	}
 

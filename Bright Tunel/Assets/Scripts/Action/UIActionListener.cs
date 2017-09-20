@@ -12,7 +12,6 @@ public class UIActionListener : MonoBehaviour
 		if (listener.gameObject != gameObject)
 		{
 			m_listener = listener;
-			Debug.Log (m_listener);
 		}
 	}
 
@@ -20,8 +19,5 @@ public class UIActionListener : MonoBehaviour
 
 	public void SetEventListener(UIActionListener listener) { m_listener = listener; }
 
-	virtual public void HandleEvent(UIActionEvent e) {
-		Debug.Log (e.ToString());
-		SendEvent(e);
-	}
+	virtual public void HandleEvent(UIActionEvent e) { SendEvent(e); }
 }

@@ -2,107 +2,181 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class WorldManager : MonoBehaviour
+public class WorldManager : UIActionListener
 {
-	[Range(0.0f, 10.0f)] public float speed;
-
-    private List<GameObject> m_WorldObjects = new List<GameObject>();
-
-    public GameObject playerObject;
-
-    public GenerationSettings generationSettings = new GenerationSettings();
-
-
-	void Start()
-	{
-		GenerateWorld (generationSettings);
-
-        //instantiate the player
-        playerObject = Instantiate(generationSettings.prefabs[1], new Vector3(0, 0, 0), new Quaternion());
-
-        //get the first object on the list wich is the bottom most one
-        GameObject holder = m_WorldObjects[0];
-        //create a list holding all the stating off jump points
-        List<Transform> transformHolder = new List<Transform>();
-
-        //get all the child objects in the chunk we are looking for
-        foreach (Transform lv1 in holder.transform)
-        {
-            //get the child objects of those ones and fin the children there with the tag "JumpBlock" and add that
-            //to our list
-            foreach (Transform child in lv1)
-            {
-                if (child.tag == "JumpBlock")
-                {
-                    transformHolder.Add(child);
-                }
-            }
-        }
-
-        //assign the players start point to the first object in the list of available points
-        //dose not matter wich one we start off with
-        playerObject.GetComponent<JumpTo>().StartPoint = transformHolder[0];
-	}
+	public WorldSettings worldSettings = new WorldSettings();
 
 	void Update ()
 	{
-		foreach (GameObject obj in m_WorldObjects)
-		{
-			obj.transform.Translate (Vector3.down * generationSettings.offset * speed * Time.deltaTime);
-		}
-
-		while (m_WorldObjects [m_WorldObjects.Count - 1].transform.position.y < Camera.main.transform.position.y)
-		{
-			CleanupChunks();
-			GenerateChunk(generationSettings);
-		}
+		// update world
+		UpdateWorld ();
     }
 
-	public void CleanupChunks()
+	void CreateWorld() { CreateWorld (worldSettings); }
+	void DeleteWorld() { DeleteWorld (worldSettings); }
+	void UpdateWorld() { UpdateWorld (worldSettings); }
+	void CreateWorldChunk() { CreateWorldChunk (worldSettings.chunkSettings); }
+	void CreateWorldChunks() { CreateWorldChunks (worldSettings.chunkSettings); }
+	void DeleteWorldChunks() { DeleteWorldChunks (worldSettings.chunkSettings); }
+	void UpdateWorldChunks() { UpdateWorldChunks (worldSettings.chunkSettings); }
+
+	public void CreateWorld(WorldSettings settings)
 	{
-		// iterate through world objects
-		for (int i = 0; i < m_WorldObjects.Count; i++)
+		// create new chunks
+		CreateWorldChunks (settings.chunkSettings);
+	}
+
+	public void DeleteWorld(WorldSettings settings)
+	{
+		// delete chunks
+		DeleteWorldChunks(settings.chunkSettings);
+	}
+
+	public void UpdateWorld(WorldSettings settings)
+	{
+		// check if paused
+		if (settings.paused != true)
 		{
-			// check if out of range
-			if (m_WorldObjects[i].transform.position.y < -Camera.main.farClipPlane)
-			{
-				// delete game object
-				Destroy(m_WorldObjects[i]);
-				m_WorldObjects.RemoveAt (i--);
-			}
+			// update chunks
+			UpdateWorldChunks (settings.chunkSettings);
 		}
 	}
 
-	public void GenerateChunk(GenerationSettings settings)
+	public void CreateWorldChunk(WorldChunkSettings settings)
 	{
 		// initialize variables
-		Vector3 position = m_WorldObjects[m_WorldObjects.Count - 1].transform.position + Vector3.up * settings.offset;
+		int index = settings.chunks.Count;
+		Vector3 position = new Vector3(0, 0, 0);
+		if (settings.chunks.Count > 0) position = settings.chunks [settings.chunks.Count - 1].transform.position;
 		// instantiate new object
-		m_WorldObjects.Add(Instantiate(settings.prefabs[0], position, new Quaternion(), settings.container));
+		settings.chunks.Add(Instantiate(settings.prefabs[0], position + Vector3.up * settings.offset, new Quaternion(), settings.container));
 	}
 
-	public void GenerateWorld(GenerationSettings settings)
+	public void DeleteWorldChunk(WorldChunkSettings settings, int index)
 	{
-		// initialize variables
-		Vector3 position = new Vector3(0, 0, 0);
-		Vector3 direction = new Vector3(0, settings.offset, 0);
-		Quaternion rotation = new Quaternion(0, 0, 0, 1);
+		// check index range
+		if (index > -1)
+		{
+			// destroy gameobject
+			Destroy (settings.chunks [index]);
+			// remove node
+			settings.chunks.RemoveAt (index);
+		}
+	}
+
+	public void DeleteWorldChunk(WorldChunkSettings settings, GameObject obj)
+	{
+		// check if null
+		if (obj != null)
+		{
+			// destroy gameobject
+			Destroy (obj);
+			// remove node
+			settings.chunks.Remove(obj);
+		}
+	}
+
+	public void DeleteWorldChunks(WorldChunkSettings settings)
+	{
+		// while not empty
+		while (settings.chunks.Count != 0)
+		{
+			// destroy gameobject
+			Destroy (settings.chunks [0]);
+			// delete node
+			settings.chunks.RemoveAt (0);
+		}
+	}
+
+	public void CreateWorldChunks(WorldChunkSettings settings)
+	{
 		// iterate through generation amount
 		for (int i = 0; i < settings.amount; i++)
 		{
-			// instantiate new object
-			m_WorldObjects.Add(Instantiate(settings.prefabs[0], position, rotation, settings.container));
-			// update next object position
-			position += direction;
+			// create new chunk
+			CreateWorldChunk (settings);
+		}
+	}
+
+	public void UpdateWorldChunks(WorldChunkSettings settings)
+	{
+		// iterate through chunks
+		foreach (GameObject obj in settings.chunks)
+		{
+			// update chunk transform
+			obj.transform.Translate (Vector3.down * settings.offset * settings.speed * Time.deltaTime);
+		}
+
+		while (settings.chunks[settings.chunks.Count - 1].transform.position.y < Camera.main.transform.position.y)
+		{
+			// iterate through chunks
+			for (int i = 0; i < settings.chunks.Count; i++)
+			{
+				// check if out of range
+				if (settings.chunks [i].transform.position.y < -Camera.main.farClipPlane)
+				{
+					// delete chunk
+					DeleteWorldChunk(settings, settings.chunks[i--]);
+				}
+			}
+			CreateWorldChunk (settings);
+		}
+	}
+
+	override public void HandleEvent(UIActionEvent e)
+	{
+		switch (e)
+		{
+		case UIActionEvent.GAME_PAUSE:
+			worldSettings.paused = true;
+			break;
+		case UIActionEvent.GAME_EXIT:
+		case UIActionEvent.GAME_BACK:
+		case UIActionEvent.GAME_MENU:
+			worldSettings.chunkSettings.speed = 0;
+			worldSettings.paused = true;
+			DeleteWorld ();
+			break;
+		case UIActionEvent.GAME_FINISH:
+			worldSettings.paused = true;
+			break;
+		case UIActionEvent.GAME_START:
+		case UIActionEvent.GAME_RESTART:
+			DeleteWorld ();
+			CreateWorld ();
+			worldSettings.paused = false;
+			worldSettings.chunkSettings.speed = 0;
+			break;
+		case UIActionEvent.GAME_CONTINUE:
+			worldSettings.paused = false;
+			break;
 		}
 	}
 
 	[System.Serializable]
-	public class GenerationSettings
+	public class WorldSettings
+	{
+		public bool paused = true;
+		public WorldChunkSettings chunkSettings;
+		public WorldPlayerSettings playerSettings;
+	}
+
+	[System.Serializable]
+	public class WorldChunkSettings
 	{
 		public int amount = 5;
 		public float offset = 1;
-		public Transform container;
+		[Range(0.0f, 5.0f)] public float speed = 0;
+		public Transform container = null;
+		[HideInInspector]
+		public List<GameObject> chunks = new List<GameObject>();
 		public List<GameObject> prefabs = new List<GameObject>();
+	}
+
+	[System.Serializable]
+	public class WorldPlayerSettings
+	{
+		public bool isPrefab = false;
+		public GameObject player = null;
 	}
 }
